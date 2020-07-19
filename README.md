@@ -19,8 +19,7 @@ _client_ and _server_ are dependent on the _shared_ project since all the model 
 ### Starting the server
 
 1. Within the _idistrsys_ folder start a CMD.
-2. For UDP, run the command : gradle server:run --args="localhost port-no"
-3. For AMQP, run the command : gradle server:run --args="localhost queue-name pull"
+2. Run the command : gradle server:run --args="channel number"
 
 The _shared_ project is automatically build before the server is started.
 Look at the dependencies block in the server/build.gradle.
@@ -28,14 +27,8 @@ Look at the dependencies block in the server/build.gradle.
 ### Starting the client
 
 1. Within the _idistrsys_ folder start a CMD.
-2. For UDP, run the command : gradle client:run --args="udp localhost port-no"
-3. For AMQP, run the command : gradle client:run --args="amqp localhost queue-name"
+2. Run the command : gradle client:run --args="grpc localhost channle number"
 
-### RabbitMQ startup
-
-1. Invoke command prompt with Administrative privilege
-2. Navigate C:\Program Files\RabbitMQ Server\rabbitmq_server-3.8.3\(or the respective directory where it is installed)
-3. Run the command "rabbitmq-plugins enable rabbitmq_management"
  
 
 The _shared_ project is automatically included in the dependencies of the client and server.
