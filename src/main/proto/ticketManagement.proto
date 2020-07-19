@@ -1,0 +1,102 @@
+syntax = "proto3";
+
+option java_package = "de.uniba.rz.io.rpc";
+option java_multiple_files = true;
+option java_outer_classname = "TicketManagement";
+option objc_class_prefix = "RTG";
+
+enum Status{
+    UNKNOWN_STATUS_TYPE = 0;
+    NEW = 1;
+    ACCEPTED = 2;
+    REJECTED = 3;
+    CLOSED = 4;
+}
+
+enum Type{
+    UNKNOWN_TICKET_TYPE = 0;
+    TASK = 1;
+    ENHANCEMENT = 2;
+    BUG = 3;
+    QUESTION = 4;
+}
+
+enum Priority{
+    UNKNOWN_PRIORITY_TYPE = 0;
+    CRITICAL = 1;
+    MAJOR = 2;
+    MINOR = 3;
+}
+
+message TicketWithoutId{
+    string reporter=2;
+    string topic=3;
+    string description=4;
+    Type type=5;
+    Priority priority = 6;
+}
+
+
+message Ticket{
+    int32 id=1;
+    string reporter=2;
+    string topic=3;
+    string description=4;
+    Type type=5;
+    Priority priority = 6;
+    Status status = 7;
+}
+
+message CreateNewTicketRequest {
+    TicketWithoutId newticket = 1;
+
+}
+
+message CreateNewTicketResponse {
+    Ticket createdTicket =1;
+}
+
+// Get all tickets
+message Empty{}
+
+message GetAllTicketsResponse{
+    repeated Ticket listOfTickets=1;
+}
+
+//Get Ticket by ID
+message GetTicketByIdRequest{
+    int32 id=1;
+
+}
+
+message GetTicketByIdResponse{
+    Ticket TicketById=1;
+}
+
+//Accept,Reject,Close Ticket
+message UpdateTicketRequest{
+    int32 id=1;
+    Status status = 2;
+
+}
+
+message UpdateTicketResponse{
+    Ticket ticket = 1;
+}
+
+message  AutoUpdateResponse{
+    repeated Ticket listOfTickets=1;
+}
+//Unary
+service TicketService{
+    rpc GetAllTickets(Empty) returns (GetAllTicketsResponse){};
+    rpc CreateTicket(CreateNewTicketRequest) returns (CreateNewTicketResponse) {};
+    rpc GetTicketById(GetTicketByIdRequest) returns (GetTicketByIdResponse){};
+    rpc UpdateTicket(UpdateTicketRequest) returns (UpdateTicketResponse){};
+    rpc StartAutoUpdating(stream Empty) returns (stream AutoUpdateResponse){};
+}
+
+//Bidirectinal
+//service AutoUpdateService{
+//    rpc StartAutoUpdating(stream Empty) returns (stream AutoUpdateResponse){};
+//}
