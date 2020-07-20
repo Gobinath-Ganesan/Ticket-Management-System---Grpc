@@ -27,7 +27,7 @@ Look at the dependencies block in the server/build.gradle.
 ### Starting the client
 
 1. Within the _idistrsys_ folder start a CMD.
-2. Run the command : gradle client:run --args="grpc localhost channle number"
+2. Run the command : gradle client:run --args="grpc localhost channel number"
 
  
 
